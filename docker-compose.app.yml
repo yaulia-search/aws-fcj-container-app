@@ -1,15 +1,5 @@
 version: "3"
 services:
-  nginx:
-    restart: always
-    depends_on:
-      - backend
-      - frontend
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
-    ports:
-      - "3000:80"
   backend:
     env_file:
       - path: "./docker-compose-env/backend.app.env"
@@ -23,9 +13,13 @@ services:
       - "5000:5000"
   frontend:
     stdin_open: true
+    depends_on:
+      - backend
     build:
       dockerfile: Dockerfile
       context: ./frontend
     volumes:
       - /app/node_modules
       - ./frontend:/app
+    ports:
+      - "3000:80"
