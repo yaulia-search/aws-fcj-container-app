@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
- <a href="https://github.com/matias-rivera/restobar/">
+   <a href="https://github.com/AWS-First-Cloud-Journey">
     <img src="./frontend/public/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -14,9 +14,21 @@
 
 ## Table of Contents
 
-1. [About this Repository]()
-2. [Examples]()
-3. [Additional Resources]()
+- [Table of Contents](#table-of-contents)
+- [About this Repository](#about-this-repository)
+- [Examples](#examples)
+  - [Deploy on your own PC](#deploy-on-your-own-pc)
+    - [A - Directly deploy on local machine (windows).](#a---directly-deploy-on-local-machine-windows)
+    - [B - Deploy on Docker with Docker Compose.](#b---deploy-on-docker-with-docker-compose)
+  - [Deploy on AWS](#deploy-on-aws)
+    - [A - Deploy on EC2 with separate Docker Image and Docker Container](#a---deploy-on-ec2-with-separate-docker-image-and-docker-container)
+    - [B - Deploy on EC2 with Docker Compose](#b---deploy-on-ec2-with-docker-compose)
+    - [C - Deploy on ECS](#c---deploy-on-ecs)
+  - [Implement CI/CD](#implement-cicd)
+    - [A - With GitLab and EC2 as Runner](#a---with-gitlab-and-ec2-as-runner)
+    - [B - With Github Actions only](#b---with-github-actions-only)
+    - [C - With GitHub and CodeBuild](#c---with-github-and-codebuild)
+- [Additional Resources](#additional-resources)
 
 ## About this Repository
 
@@ -39,6 +51,10 @@ All of these examples are built for our use cases. If you want to use in your ow
 This scenario is divided into 2 cases:
 
 #### A - Directly deploy on local machine (windows).
+
+<p align="center">
+   <img src="./images/deploy_on_local.png">
+</p>
 
 If you deploy in this case, you have to install MySQL Server (Community) and make sure it is running on your local machine, then install dependencies and libraries to deploy appications.
 
@@ -64,6 +80,10 @@ For more details, you can follow [these steps](https://000015.awsstudygroup.com/
 
 #### B - Deploy on Docker with Docker Compose.
 
+<p align="center">
+   <img src="./images/deploy_on_local_docker_compose.png">
+</p>
+
 If you deploy in this case, you have to enable WSL2 and install Ubuntu Distro on you Windows Machine, then install **Docker**.
 
 1. Install these dependencies:
@@ -87,6 +107,10 @@ docker compose -f docker-compose.yml up
 > **React** Application will be built an antifacts and will be served by **Nginx**.
 
 ### Deploy on AWS
+
+<p align="center">
+   <img src="./images/deploy_on_aws.png">
+</p>
 
 Before you do these examples, you have to make sure that:
 
@@ -134,6 +158,10 @@ For more details, you can follow [these steps](https://000015.awsstudygroup.com/
 
 #### C - Deploy on ECS
 
+<p align="center">
+   <img src="./images/deploy_on_ecs.png">
+</p>
+
 Now, we will use **ECS** to deploy our application instead of **EC2**. Before you go to further, make sure that:
 
 1. RDS Instance is still running.
@@ -163,13 +191,25 @@ In this scenario, we will implement CI/CD with GitLab and EC2; with GitHub Actio
 
 #### A - With GitLab and EC2 as Runner
 
+<p align="center">
+   <img src="./images/cicd_gitlab.png">
+</p>
+
 We will register a EC2 Instance as a Runner. And this EC2 Instance will be attached a IAM Role with suitable permissions. For more details, you can follow [these steps](https://000017.awsstudygroup.com/3-cicd-gitlab/).
 
 #### B - With Github Actions only
 
+<p align="center">
+   <img src="./images/cicd_github.png">
+</p>
+
 We will need an AWS Account with suitable permissions to to this part. For more details, you can follow [these steps](https://000017.awsstudygroup.com/4-cicd-github/).
 
 #### C - With GitHub and CodeBuild
+
+<p align="center">
+   <img src="./images/cicd_codebuild.png">
+</p>
 
 We will need to setup 2 **CodeBuild** Projects for Frontend and Backend, then use Github Actions to trigger CodeBuild to deploy application. For more details, you can follow [these steps](https://000017.awsstudygroup.com/5-cicd-codebuild/).
 
