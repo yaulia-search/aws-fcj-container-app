@@ -47,7 +47,51 @@ jobs:
           docker build -f Dockerfile -t ${{ env.IMAGE_NAME_BE }} .
           docker push ${{ env.IMAGE_NAME_BE }}
 
-  deploy:
+  deploy-staging:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy Backend
+        env:
+          TASK_NAME_BE: ${{ secrets.TASK_NAME_BE }}
+          IMAGE_NAME_BE: ${{ env.IMAGE_NAME_BE }}
+          AWS_APPLICATION_NAME: ${{ secrets.AWS_APPLICATION_NAME }}
+          AWS_DEPLOYMENT_GROUP_NAME: ${{ secrets.AWS_DEPLOYMENT_GROUP_NAME }}
+          REGION: ${{ secrets.AWS_REGION }}
+        run: bash backend/deploy-backend.sh
+  approve-prod:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy Backend
+        env:
+          TASK_NAME_BE: ${{ secrets.TASK_NAME_BE }}
+          IMAGE_NAME_BE: ${{ env.IMAGE_NAME_BE }}
+          AWS_APPLICATION_NAME: ${{ secrets.AWS_APPLICATION_NAME }}
+          AWS_DEPLOYMENT_GROUP_NAME: ${{ secrets.AWS_DEPLOYMENT_GROUP_NAME }}
+          REGION: ${{ secrets.AWS_REGION }}
+        run: bash backend/deploy-backend.sh
+  deploy-prod:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
